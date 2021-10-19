@@ -1,7 +1,7 @@
-var _this = (function (obj) {
-    return obj;
+(function (obj) {
+    $(obj.onLoad);
 })((function () {
-    var __ = {
+    let __ = {
         property: {
 
         },
@@ -37,11 +37,11 @@ var _this = (function (obj) {
                     $parent.removeClass("code-view-disabled");
                 }
                 toastr.success("", "コピーされました。", { timeOut: 700 });
-                var code_element = $(this).closest("pre").find("code")[0];
-                var value = code_element.innerText.replace(/\n\n\n/ig, '').replace('    \n', '').replace(/\t\n/ig, '\n');
-                var selection = window.getSelection();
-                var body_element = document.getElementsByTagName('body')[0];
-                var newdiv = document.createElement('div');
+                let code_element = $(this).closest("pre").find("code")[0];
+                let value = code_element.innerText.replace(/\n\n\n/ig, '').replace('    \n', '').replace(/\t\n/ig, '\n');
+                let selection = window.getSelection();
+                let body_element = document.getElementsByTagName('body')[0];
+                let newdiv = document.createElement('div');
                 newdiv.style.position = 'absolute';
                 newdiv.style.left = '-10000px';
                 newdiv.style.top = '-10000px';
@@ -56,5 +56,9 @@ var _this = (function (obj) {
         }
     };
     $(__.ev);
-    return {}
+    return {
+        onLoad: function () {
+
+        }
+    }
 })());

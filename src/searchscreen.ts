@@ -1,20 +1,20 @@
-var _this = (function (obj) {
-	return obj
+(function (obj) {
+	$(obj.onLoad);
 })((function () {
-	var __ = {
+	let __ = {
 		property: {
 
 		},
 		fn: {
 			getParameterByName: function (name: any) {
 				name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-				var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"), results = regex.exec(location.search);
+				let regex = new RegExp("[\\?&]" + name + "=([^&#]*)"), results = regex.exec(location.search);
 				return results === null ? null : decodeURIComponent(results[1].replace(/\+/g, " "));
 			},
 			getCategoryName: function (code: any) {
-				var $item = $(".category-item[data-code=" + code + "]");
+				let $item = $(".category-item[data-code=" + code + "]");
 				$item.addClass("active");
-				var $parent = $item.closest("ul.sub_category_list");
+				let $parent = $item.closest("ul.sub_category_list");
 				if ($parent.length > 0) {
 					//$parent.prev().trigger("click");
 					return $parent.prev().text() + ' / ' + $item.text();
@@ -22,22 +22,22 @@ var _this = (function (obj) {
 				return $item.text();
 			},
 			view: function () {
-				var category = __.fn.getParameterByName('category');
-				var query = __.fn.getParameterByName('query');
+				let category = __.fn.getParameterByName('category');
+				let query = __.fn.getParameterByName('query');
 				if (query === null && category === null) {
 					$(".searchList").hide();
 				} else if (category !== null) {
-					var categoryname = __.fn.getCategoryName(category);
+					let categoryname = __.fn.getCategoryName(category);
 					$(".searchList h1 span").text(categoryname);
 				} else if (query !== null) {
 					$(".searchList h1 span").text(query);
 				}
-				_.loading.on();
+				loading.on();
 				if (category !== null) {
 					$("article:not([data-category-code=" + category + "])").hide();
 					$("#searchResultCount").text($("article[data-category-code=" + category + "]").length);
 				} else if (query !== null) {
-					var count = 0;
+					let count = 0;
 					$("article").each(function () {
 						if (query !== null && $(this).find("h5.ci-link").text().toUpperCase().indexOf(query.toUpperCase()) > -1) {
 							count++;
@@ -52,7 +52,7 @@ var _this = (function (obj) {
 					$("#searchResultCount").text(count);
 					$("input[type=search]").val(query);
 				}
-				_.loading.off();
+				loading.off();
 			}
 		},
 		ev: function () {
@@ -68,6 +68,8 @@ var _this = (function (obj) {
 	});
 
 	return {
+		onLoad: function () {
 
+		}
 	};
 })());
