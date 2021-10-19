@@ -1,7 +1,7 @@
-var _this = (function (obj) {
-	return obj
+(function (obj) {
+	$(obj.onLoad);
 })((function () {
-	var __ = {
+	let __ = {
 		property: {
 
 		},
@@ -19,6 +19,8 @@ var _this = (function (obj) {
 	});
 
 	return {
+		onLoad: function () {
 
+		}
 	};
 })());

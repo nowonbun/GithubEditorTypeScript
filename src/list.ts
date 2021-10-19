@@ -1,7 +1,7 @@
-var _this = (function (obj) {
-	return obj
+(function (obj) {
+	$(obj.onLoad);
 })((function () {
-	var __ = {
+	let __ = {
 		property: {
 			page: 0,
 			count: (function () {
@@ -21,12 +21,12 @@ var _this = (function (obj) {
 		},
 		fn: {
 			selectList: function () {
-				var code = $("#category").val();
-				var query = $("#query").val();
+				let code = $("#category").val();
+				let query = $("#query").val();
 				if (code !== undefined && $.trim(code.toString()) !== "") {
-					var $item = $(".category-item[data-code=" + code + "]");
+					let $item = $(".category-item[data-code=" + code + "]");
 					$item.addClass("active");
-					/*var $parent = $item.closest("ul.sub_category_list");
+					/*let $parent = $item.closest("ul.sub_category_list");
 					if($parent.length > 0){
 						$parent.prev().trigger("click");
 					}*/
@@ -35,17 +35,17 @@ var _this = (function (obj) {
 				}
 			},
 			getList: function () {
-				_.loading.on();
+				loading.on();
 				if (__.property.count === 0) {
-					var $article = $("<article class='no-list-item'></article>");
-					var $entity = $("<div class='list-row pos-right ratio-fixed ratio-4by3 crop-center lts-narrow fouc clearfix no-result'></div>");
-					var $entity_body = $("<div style='width: 100%;text-align:center;'></div>");
+					let $article = $("<article class='no-list-item'></article>");
+					let $entity = $("<div class='list-row pos-right ratio-fixed ratio-4by3 crop-center lts-narrow fouc clearfix no-result'></div>");
+					let $entity_body = $("<div style='width: 100%;text-align:center;'></div>");
 					$entity_body.append("検索結果がありません。");
 					$(".list-area").html("");
 					$entity.append($entity_body);
 					$article.append($entity);
 					$(".list-area").append($article);
-					_.loading.off();
+					loading.off();
 					return;
 				}
 				$.ajax({
@@ -58,19 +58,19 @@ var _this = (function (obj) {
 					},
 					url: "./list.ajax",
 					success: function (data) {
-						for (var i = 0; i < data.length; i++) {
-							var post = data[i];
-							var $article = $($(".list-article").html());
+						for (let i = 0; i < data.length; i++) {
+							let post = data[i];
+							let $article = $($(".list-article").html());
 							$article.find(".list-link").prop("href", "./post.html?idx=" + post.idx);
 							$article.find(".ci-link").html(post.title);
 							if (post.tags !== undefined && post.tags !== null) {
 								$article.find(".tag-column").html("");
-								var taglist = post.tags.split(',');
+								let taglist = post.tags.split(',');
 								//console.log(taglist);
-								for (var j = 0; j < taglist.length; j++) {
-									var tagData = $.trim(taglist[j]);
+								for (let j = 0; j < taglist.length; j++) {
+									let tagData = $.trim(taglist[j]);
 									if (tagData[0] === '#') {
-										var taglink = $("<a class='p-tag'></a>").prop("href", "./search.html?query=" + encodeURIComponent(taglist[j].substring(1, taglist[j].length)));
+										let taglink = $("<a class='p-tag'></a>").prop("href", "./search.html?query=" + encodeURIComponent(taglist[j].substring(1, taglist[j].length)));
 										taglink = taglink.text(taglist[j]);
 										$article.find(".tag-column").append(taglink);
 									} else {
@@ -78,7 +78,7 @@ var _this = (function (obj) {
 									}
 									$article.find(".tag-column").append(",");
 								}
-								var tagColumn = $article.find(".tag-column").html();
+								let tagColumn = $article.find(".tag-column").html();
 								$article.find(".tag-column").html(tagColumn.substring(0, tagColumn.length - 1));
 							}
 							$article.find(".p-category").text(post.categoryName);
@@ -88,7 +88,7 @@ var _this = (function (obj) {
 							$(".list-area").append($article);
 						}
 						__.property.page++;
-						_.loading.off();
+						loading.off();
 					},
 					error: function (jqXHR, textStatus, errorThrown) {
 						console.error(jqXHR);
@@ -96,7 +96,7 @@ var _this = (function (obj) {
 						toastr.error("エラーが発生しました。ログを確認してください。");
 					},
 					complete: function (jqXHR, textStatus) {
-						_.loading.off();
+						loading.off();
 					}
 				});
 			}
@@ -124,5 +124,9 @@ var _this = (function (obj) {
 		__.fn.getList();
 		__.fn.selectList();
 	});
-	return {};
+	return {
+		onLoad: function () {
+
+		}
+	};
 })());

@@ -1,7 +1,7 @@
-var _this = (function (obj) {
-	return obj;
+(function (obj) {
+	$(obj.onLoad);
 })((function () {
-	var __ = {
+	let __ = {
 		property: {
 			maximumImageFileSize: 1024 * 1024,
 			idx: $("#idx").val()
@@ -42,7 +42,7 @@ var _this = (function (obj) {
 						toastr.error("エラーが発生しました。ログを確認してください。");
 					},
 					complete: function (jqXHR, textStatus) {
-						_.loading.off();
+						loading.off();
 					}
 				});
 			},
@@ -83,7 +83,7 @@ var _this = (function (obj) {
 						toastr.error("예상치 못한 에러가 발생했습니다. 로그를 확인해 주십시오.");
 					},
 					complete: function (jqXHR, textStatus) {
-						_.loading.off();
+						loading.off();
 					}
 				});
 			},
@@ -112,11 +112,11 @@ var _this = (function (obj) {
 				});
 			},
 			getBase64Data: function (data: any) {
-				var item = data.split(",");
+				let item = data.split(",");
 				if (item.length != 2) {
 					return null;
 				}
-				var type = item[0].split(";");
+				let type = item[0].split(";");
 				if (type.length != 2) {
 					return null;
 				}
@@ -131,7 +131,7 @@ var _this = (function (obj) {
 		},
 		ev: function () {
 			$("input[type=file].note-image-input").on("change", function () {
-				var el = <HTMLInputElement>$(this)[0];
+				let el = <HTMLInputElement>$(this)[0];
 				if (el.files !== null) {
 					if (el.files[0].size > __.property.maximumImageFileSize) {
 						toastr.error("big file.");
@@ -139,7 +139,7 @@ var _this = (function (obj) {
 				}
 			});
 			$("input[type=file].note-attach-input").on("change", function () {
-				var el = <HTMLInputElement>$(this)[0];
+				let el = <HTMLInputElement>$(this)[0];
 				if (el.files !== null) {
 					if (el.files[0].size > __.property.maximumImageFileSize) {
 						toastr.error("big file.");
@@ -148,11 +148,11 @@ var _this = (function (obj) {
 						return;
 					}
 					//https://summernote.org/deep-dive/#insertimage
-					var file = el.files[0];
-					var filename = file.name;
-					var reader = new FileReader();
+					let file = el.files[0];
+					let filename = file.name;
+					let reader = new FileReader();
 					reader.onload = function (e) {
-						var node = document.createElement('p');
+						let node = document.createElement('p');
 						let ret = reader.result;
 						if (ret !== null) {
 							$(node).append($("<a class='attachfile'><img src='./img/zip.gif'> " + filename + "</a>").attr("href", ret.toString()).attr("data-filename", filename));
@@ -171,9 +171,9 @@ var _this = (function (obj) {
 					toastr.error("empty title");
 					return;
 				}
-				_.loading.on();
-				var state = 0;
-				var count = $("img[data-filename]").length + $("a.attachfile[data-filename]").length;
+				loading.on();
+				let state = 0;
+				let count = $("img[data-filename]").length + $("a.attachfile[data-filename]").length;
 				function checkNwritePost() {
 					state++;
 					if (state === count) {
@@ -184,8 +184,8 @@ var _this = (function (obj) {
 					__.fn.writePost();
 				}
 				$("img[data-filename]").each(function () {
-					var _this = $(this);
-					var data = __.fn.getBase64Data($(this).prop("src"));
+					let _this = $(this);
+					let data = __.fn.getBase64Data($(this).prop("src"));
 					if (data === null) {
 						checkNwritePost();
 						return;
@@ -199,8 +199,8 @@ var _this = (function (obj) {
 					});
 				});
 				$("a.attachfile[data-filename]").each(function () {
-					var _this = $(this);
-					var data = __.fn.getBase64Data($(this).prop("href"));
+					let _this = $(this);
+					let data = __.fn.getBase64Data($(this).prop("href"));
 					if (data === null) {
 						checkNwritePost();
 						return;
@@ -221,9 +221,9 @@ var _this = (function (obj) {
 					toastr.error("empty title");
 					return;
 				}
-				_.loading.on();
-				var state = 0;
-				var count = $("img[data-filename]").length + $("a.attachfile[data-filename]").length;
+				loading.on();
+				let state = 0;
+				let count = $("img[data-filename]").length + $("a.attachfile[data-filename]").length;
 				function checkNmodifyPost() {
 					state++;
 					if (state === count) {
@@ -234,8 +234,8 @@ var _this = (function (obj) {
 					__.fn.modifyPost(false);
 				}
 				$("img[data-filename]").each(function () {
-					var $this = $(this);
-					var data = __.fn.getBase64Data($(this).prop("src"));
+					let $this = $(this);
+					let data = __.fn.getBase64Data($(this).prop("src"));
 					if (data === null) {
 						checkNmodifyPost();
 						return;
@@ -249,8 +249,8 @@ var _this = (function (obj) {
 					});
 				});
 				$("a.attachfile[data-filename]").each(function () {
-					var $this = $(this);
-					var data = __.fn.getBase64Data($(this).prop("href"));
+					let $this = $(this);
+					let data = __.fn.getBase64Data($(this).prop("href"));
 					if (data === null) {
 						checkNmodifyPost();
 						return;
@@ -271,9 +271,9 @@ var _this = (function (obj) {
 					toastr.error("empty title");
 					return;
 				}
-				_.loading.on();
-				var state = 0;
-				var count = $("img[data-filename]").length + $("a.attachfile[data-filename]").length;
+				loading.on();
+				let state = 0;
+				let count = $("img[data-filename]").length + $("a.attachfile[data-filename]").length;
 				function checkNmodifyPost() {
 					state++;
 					if (state === count) {
@@ -284,8 +284,8 @@ var _this = (function (obj) {
 					__.fn.modifyPost(true);
 				}
 				$("img[data-filename]").each(function () {
-					var $this = $(this);
-					var data = __.fn.getBase64Data($(this).prop("src"));
+					let $this = $(this);
+					let data = __.fn.getBase64Data($(this).prop("src"));
 					if (data === null) {
 						checkNmodifyPost();
 						return;
@@ -299,8 +299,8 @@ var _this = (function (obj) {
 					});
 				});
 				$("a.attachfile[data-filename]").each(function () {
-					var $this = $(this);
-					var data = __.fn.getBase64Data($(this).prop("href"));
+					let $this = $(this);
+					let data = __.fn.getBase64Data($(this).prop("href"));
 					if (data === null) {
 						checkNmodifyPost();
 						return;
@@ -316,7 +316,7 @@ var _this = (function (obj) {
 			});
 
 			$("#delete_btn").on("click", function () {
-				_.loading.on();
+				loading.on();
 				$.ajax({
 					type: 'POST',
 					dataType: 'json',
@@ -335,7 +335,7 @@ var _this = (function (obj) {
 						toastr.error("エラーが発生しました。ログを確認してください。");
 					},
 					complete: function (jqXHR, textStatus) {
-						_.loading.off();
+						loading.off();
 					}
 				});
 			});
@@ -356,10 +356,10 @@ var _this = (function (obj) {
 		}
 	};
 	$(__.ev);
-	_.loading.on();
+	loading.on();
 	let height = $(window).height();
 	if (height !== undefined) {
-		var node_height = height - 400;
+		let node_height = height - 400;
 		if (node_height < 250) {
 			node_height = 250;
 		}
@@ -369,7 +369,7 @@ var _this = (function (obj) {
 			callbacks: {
 				onInit: function () {
 					//attachfile
-					var button = $('<button type="button" role="button" tabindex="-1" title="" aria-label="Attachfile" data-original-title="Attachfile"></button>');
+					let button = $('<button type="button" role="button" tabindex="-1" title="" aria-label="Attachfile" data-original-title="Attachfile"></button>');
 					button.addClass("note-btn btn btn-light btn-sm attachment-tools");
 					button.append($('<i class="fa fa-paperclip"></i>'));
 					button.on("click", function () {
@@ -381,7 +381,10 @@ var _this = (function (obj) {
 		});
 	}
 
-	_.loading.off();
+	loading.off();
 	return {
+		onLoad: function () {
+
+		}
 	}
 })());

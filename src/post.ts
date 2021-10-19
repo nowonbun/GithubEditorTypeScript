@@ -1,7 +1,7 @@
-var _this = (function (obj) {
-	return obj;
+(function (obj) {
+	$(obj.onLoad);
 })((function () {
-	var __ = {
+	let __ = {
 		property: {
 			maximumImageFileSize: 1024 * 1024,
 			modifyMode: false,
@@ -33,11 +33,11 @@ var _this = (function (obj) {
 				});
 			},
 			getBase64Data: function (data: any) {
-				var item = data.split(",");
+				let item = data.split(",");
 				if (item.length != 2) {
 					return null;
 				}
-				var type = item[0].split(";");
+				let type = item[0].split(";");
 				if (type.length != 2) {
 					return null;
 				}
@@ -55,9 +55,9 @@ var _this = (function (obj) {
 					toastr.error("empty title");
 					return;
 				}
-				_.loading.on();
-				var state = 0;
-				var count = $("img[data-filename]").length + $("a.attachfile[data-filename]").length;
+				loading.on();
+				let state = 0;
+				let count = $("img[data-filename]").length + $("a.attachfile[data-filename]").length;
 				function checkNmodifyPost() {
 					state++;
 					if (state === count) {
@@ -68,8 +68,8 @@ var _this = (function (obj) {
 					//__.fn.modifyPost();
 				}
 				$("img[data-filename]").each(function () {
-					var $this = $(this);
-					var data = __.fn.getBase64Data($(this).prop("src"));
+					let $this = $(this);
+					let data = __.fn.getBase64Data($(this).prop("src"));
 					if (data === null) {
 						checkNmodifyPost();
 						return;
@@ -83,8 +83,8 @@ var _this = (function (obj) {
 					});
 				});
 				$("a.attachfile[data-filename]").each(function () {
-					var $this = $(this);
-					var data = __.fn.getBase64Data($(this).prop("href"));
+					let $this = $(this);
+					let data = __.fn.getBase64Data($(this).prop("href"));
 					if (data === null) {
 						checkNmodifyPost();
 						return;
@@ -101,8 +101,8 @@ var _this = (function (obj) {
 		},
 		ev: function () {
 			$("#modify_btn").on("click", function () {
-				var form = document.createElement('form');
-				var submit = document.createElement('input');
+				let form = document.createElement('form');
+				let submit = document.createElement('input');
 				form.action = "./modify.html?idx=" + __.property.idx;
 				form.method = "POST";
 				submit.type = "submit";
@@ -111,7 +111,7 @@ var _this = (function (obj) {
 				submit.click();
 			});
 			$("#delete_btn").on("click", function () {
-				_.loading.on();
+				loading.on();
 				$.ajax({
 					type: 'POST',
 					dataType: 'json',
@@ -130,7 +130,7 @@ var _this = (function (obj) {
 						toastr.error("エラーが発生しました。ログを確認してください。");
 					},
 					complete: function (jqXHR, textStatus) {
-						_.loading.off();
+						loading.off();
 					}
 				});
 			});
@@ -152,11 +152,11 @@ var _this = (function (obj) {
 						return;
 					}
 					// https://summernote.org/deep-dive/#insertimage
-					var file = el.files[0];
-					var filename = file.name;
-					var reader = new FileReader();
+					let file = el.files[0];
+					let filename = file.name;
+					let reader = new FileReader();
 					reader.onload = function (e) {
-						var node = document.createElement('p');
+						let node = document.createElement('p');
 						let ret = reader.result;
 						if (ret !== null) {
 							$(node).append($("<a class='attachfile'><img src='./img/zip.gif'> " + filename + "</a>").attr("href", ret.toString()).attr("data-filename", filename));
@@ -197,11 +197,11 @@ var _this = (function (obj) {
 					$parent.removeClass("code-view-disabled");
 				}
 				toastr.success("", "コピーされました。", { timeOut: 700 });
-				var code_element = $(this).closest("pre").find("code")[0];
-				var value = code_element.innerText.replace(/\n\n\n/ig, '').replace('    \n', '');
-				var selection = window.getSelection();
-				var body_element = document.getElementsByTagName('body')[0];
-				var newdiv = document.createElement('div');
+				let code_element = $(this).closest("pre").find("code")[0];
+				let value = code_element.innerText.replace(/\n\n\n/ig, '').replace('    \n', '');
+				let selection = window.getSelection();
+				let body_element = document.getElementsByTagName('body')[0];
+				let newdiv = document.createElement('div');
 				newdiv.style.position = 'absolute';
 				newdiv.style.left = '-10000px';
 				newdiv.style.top = '-10000px';
@@ -217,5 +217,9 @@ var _this = (function (obj) {
 	};
 
 	$(__.ev);
-	return {}
+	return {
+		onLoad: function () {
+
+		}
+	}
 })());
