@@ -6,12 +6,12 @@
 
 		},
 		fn: {
-			getParameterByName: function (name: any) {
+			getParameterByName: function (name: string) {
 				name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
 				let regex = new RegExp("[\\?&]" + name + "=([^&#]*)"), results = regex.exec(location.search);
 				return results === null ? null : decodeURIComponent(results[1].replace(/\+/g, " "));
 			},
-			getCategoryName: function (code: any) {
+			getCategoryName: function (code: string) {
 				let $item = $(".category-item[data-code=" + code + "]");
 				$item.addClass("active");
 				let $parent = $item.closest("ul.sub_category_list");

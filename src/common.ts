@@ -39,7 +39,7 @@ let loading = {
 		}
 	});
 	$(document).on("change", ".search-text", function () {
-		let $val = $(this).val();
+		let $val = <string>$(this).val();
 		if ($val !== undefined) {
 			$(".search-text").val($val);
 		}

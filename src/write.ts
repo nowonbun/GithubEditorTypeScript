@@ -46,7 +46,7 @@
 					}
 				});
 			},
-			modifyPost: function (isDate: any) {
+			modifyPost: function (isDate: boolean) {
 				$.ajax({
 					type: 'POST',
 					dataType: 'json',
@@ -87,7 +87,7 @@
 					}
 				});
 			},
-			uploadAttachFile: function (filename: any, type: any, data: any, cb: any, er: any) {
+			uploadAttachFile: function (filename: string, type: string, data: string, cb: any, er: any) {
 				$.ajax({
 					type: 'POST',
 					dataType: 'json',

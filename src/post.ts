@@ -1,6 +1,9 @@
 (function (obj) {
 	$(obj.onLoad);
 })((function () {
+	interface cbData {
+		message: string
+	}
 	let __ = {
 		property: {
 			maximumImageFileSize: 1024 * 1024,
@@ -8,7 +11,7 @@
 			idx: $("#idx").val()
 		},
 		fn: {
-			uploadAttachFile: function (filename: any, type: any, data: any, cb: any, er: any) {
+			uploadAttachFile: function (filename: string, type: string, data: string, cb: any, er: any) {
 				$.ajax({
 					type: 'POST',
 					dataType: 'json',
@@ -32,7 +35,7 @@
 					}
 				});
 			},
-			getBase64Data: function (data: any) {
+			getBase64Data: function (data: string) {
 				let item = data.split(",");
 				if (item.length != 2) {
 					return null;
@@ -74,7 +77,7 @@
 						checkNmodifyPost();
 						return;
 					}
-					__.fn.uploadAttachFile($(this).data("filename"), data.type, data.item, function (data: any) {
+					__.fn.uploadAttachFile($(this).data("filename"), data.type, data.item, function (data: cbData) {
 						$this.prop("src", data.message);
 						checkNmodifyPost();
 					}, function () {
@@ -89,7 +92,7 @@
 						checkNmodifyPost();
 						return;
 					}
-					__.fn.uploadAttachFile($(this).data("filename"), data.type, data.item, function (data: any) {
+					__.fn.uploadAttachFile($(this).data("filename"), data.type, data.item, function (data: cbData) {
 						$this.prop("href", data.message);
 						checkNmodifyPost();
 					}, function () {
