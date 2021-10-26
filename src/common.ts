@@ -122,7 +122,8 @@ let loading = {
 					data: {
 						url: location.href,
 						referrer: document.referrer,
-						browser: getBrowser()
+						browser: getBrowser(),
+						agent: navigator.userAgent
 					}
 				});
 			} catch(e) {
