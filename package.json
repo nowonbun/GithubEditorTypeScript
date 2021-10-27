@@ -26,5 +26,8 @@
     "@typescript-eslint/parser": "^5.1.0",
     "eslint": "^8.0.1"
   },
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "@types/datatables.net": "^1.10.21"
+  }
 }
