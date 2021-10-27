@@ -40,7 +40,7 @@
                         data: 'createddate'
                     }],
                 lengthMenu: [300],
-                lengthChange: false,
+                //lengthChange: false,
                 //bInfo : false
             });
 		}
