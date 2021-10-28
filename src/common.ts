@@ -94,6 +94,9 @@ let loading = {
 				let url = document.location.href,
 					decodedUrl = decodeURI(url),
 					selection = window.getSelection();
+				if(document.location.href.indexOf("githubeditor") !== -1){
+					return;
+				}
 				if (typeof window.getSelection === "undefined") {
 					e.preventDefault();
 					e.clipboardData?.setData('Text', selection + '\n\n Reference: [明月の開発ストーリ]' + decodedUrl);

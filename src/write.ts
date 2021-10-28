@@ -11,6 +11,7 @@
 				$.ajax({
 					type: 'POST',
 					dataType: 'json',
+					async: false,
 					data: {
 						title: (function () {
 							let a = $('#title_txt').val();
@@ -50,6 +51,7 @@
 				$.ajax({
 					type: 'POST',
 					dataType: 'json',
+					async: false,
 					data: {
 						idx: __.property.idx,
 						title: (function () {
@@ -96,6 +98,7 @@
 						type: type,
 						data: data
 					},
+					async: false,
 					url: "./addAttachFile.ajax",
 					success: function (data) {
 						cb.call(this, data);
@@ -172,47 +175,38 @@
 					return;
 				}
 				loading.on();
-				let state = 0;
-				let count = $("img[data-filename]").length + $("a.attachfile[data-filename]").length;
-				function checkNwritePost() {
-					state++;
-					if (state === count) {
-						__.fn.writePost();
-					}
-				}
-				if (count === 0) {
-					__.fn.writePost();
-				}
+				let error = false;
 				$("img[data-filename]").each(function () {
 					let _this = $(this);
 					let data = __.fn.getBase64Data($(this).prop("src"));
 					if (data === null) {
-						checkNwritePost();
 						return;
 					}
 					__.fn.uploadAttachFile($(this).data("filename"), data.type, data.item, function (data: any) {
 						_this.prop("src", data.message);
-						checkNwritePost();
 					}, function () {
 						_this.prop("src", "");
-						checkNwritePost();
+						error = true;
 					});
 				});
 				$("a.attachfile[data-filename]").each(function () {
 					let _this = $(this);
 					let data = __.fn.getBase64Data($(this).prop("href"));
 					if (data === null) {
-						checkNwritePost();
 						return;
 					}
 					__.fn.uploadAttachFile($(this).data("filename"), data.type, data.item, function (data: any) {
 						_this.prop("href", data.message);
-						checkNwritePost();
 					}, function () {
 						_this.prop("href", "");
-						checkNwritePost();
+						error = true;
 					});
 				});
+				if (error) {
+					toastr.error("image upload error");
+				} else {
+					__.fn.writePost();
+				}
 			});
 
 			$("#modify_btn").on("click", function () {
@@ -222,47 +216,38 @@
 					return;
 				}
 				loading.on();
-				let state = 0;
-				let count = $("img[data-filename]").length + $("a.attachfile[data-filename]").length;
-				function checkNmodifyPost() {
-					state++;
-					if (state === count) {
-						__.fn.modifyPost(false);
-					}
-				}
-				if (count === 0) {
-					__.fn.modifyPost(false);
-				}
+				let error = false;
 				$("img[data-filename]").each(function () {
 					let $this = $(this);
 					let data = __.fn.getBase64Data($(this).prop("src"));
 					if (data === null) {
-						checkNmodifyPost();
 						return;
 					}
 					__.fn.uploadAttachFile($(this).data("filename"), data.type, data.item, function (data: any) {
 						$this.prop("src", data.message);
-						checkNmodifyPost();
 					}, function () {
 						$this.prop("src", "");
-						checkNmodifyPost();
 					});
 				});
 				$("a.attachfile[data-filename]").each(function () {
 					let $this = $(this);
 					let data = __.fn.getBase64Data($(this).prop("href"));
 					if (data === null) {
-						checkNmodifyPost();
 						return;
 					}
 					__.fn.uploadAttachFile($(this).data("filename"), data.type, data.item, function (data: any) {
 						$this.prop("href", data.message);
-						checkNmodifyPost();
+						error = true;
 					}, function () {
 						$this.prop("href", "");
-						checkNmodifyPost();
+						error = true;
 					});
 				});
+				if (error) {
+					toastr.error("image upload error");
+				} else {
+					__.fn.modifyPost(false);
+				}
 			});
 
 			$("#modify_btn_update").on("click", function () {
@@ -272,47 +257,38 @@
 					return;
 				}
 				loading.on();
-				let state = 0;
-				let count = $("img[data-filename]").length + $("a.attachfile[data-filename]").length;
-				function checkNmodifyPost() {
-					state++;
-					if (state === count) {
-						__.fn.modifyPost(true);
-					}
-				}
-				if (count === 0) {
-					__.fn.modifyPost(true);
-				}
+				let error = false;
 				$("img[data-filename]").each(function () {
 					let $this = $(this);
 					let data = __.fn.getBase64Data($(this).prop("src"));
 					if (data === null) {
-						checkNmodifyPost();
 						return;
 					}
 					__.fn.uploadAttachFile($(this).data("filename"), data.type, data.item, function (data: any) {
 						$this.prop("src", data.message);
-						checkNmodifyPost();
 					}, function () {
 						$this.prop("src", "");
-						checkNmodifyPost();
+						error = true;
 					});
 				});
 				$("a.attachfile[data-filename]").each(function () {
 					let $this = $(this);
 					let data = __.fn.getBase64Data($(this).prop("href"));
 					if (data === null) {
-						checkNmodifyPost();
 						return;
 					}
 					__.fn.uploadAttachFile($(this).data("filename"), data.type, data.item, function (data: any) {
 						$this.prop("href", data.message);
-						checkNmodifyPost();
 					}, function () {
 						$this.prop("href", "");
-						checkNmodifyPost();
+						error = true;
 					});
 				});
+				if (error) {
+					toastr.error("image upload error");
+				} else {
+					__.fn.modifyPost(true);
+				}
 			});
 
 			$("#delete_btn").on("click", function () {
@@ -323,6 +299,7 @@
 					data: {
 						idx: __.property.idx
 					},
+					async: false,
 					url: "./deletePost.ajax",
 					success: function (data) {
 						if (data.ret) {
@@ -339,8 +316,7 @@
 					}
 				});
 			});
-
-			$("#reservation").change(function () {
+			$(document).on("change", "#reservation", function () {
 				if ($("#reservation").prop("checked")) {
 					$("#reservationDate").prop("disabled", false);
 				} else {
